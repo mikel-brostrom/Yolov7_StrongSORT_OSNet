@@ -4,6 +4,7 @@ from pathlib import Path
 import numpy as np
 import torchvision.transforms as transforms
 import cv2
+import pandas as pd
 import gdown
 from os.path import exists as file_exists
 from .deep.reid_model_factory import show_downloadeable_models, get_model_url, get_model_name
@@ -94,12 +95,27 @@ class ReIDDetectMultiBackend(nn.Module):
         self.fp16 = fp16
         self.device = device
         
-        
-    @staticmethod
-    def model_type(p='path/to/model.pt'):
+    def export_formats(self):
+        # YOLOv5 export formats
+        x = [
+            ['PyTorch', '-', '.pt', True, True],
+            ['TorchScript', 'torchscript', '.torchscript', True, True],
+            ['ONNX', 'onnx', '.onnx', True, True],
+            ['OpenVINO', 'openvino', '_openvino_model', True, False],
+            ['TensorRT', 'engine', '.engine', False, True],
+            ['CoreML', 'coreml', '.mlmodel', True, False],
+            ['TensorFlow SavedModel', 'saved_model', '_saved_model', True, True],
+            ['TensorFlow GraphDef', 'pb', '.pb', True, True],
+            ['TensorFlow Lite', 'tflite', '.tflite', True, False],
+            ['TensorFlow Edge TPU', 'edgetpu', '_edgetpu.tflite', False, False],
+            ['TensorFlow.js', 'tfjs', '_web_model', False, False],]
+        return pd.DataFrame(x, columns=['Format', 'Argument', 'Suffix', 'CPU', 'GPU'])
+    
+
+    def model_type(self, p='path/to/model.pt'):
         # Return model type from model path, i.e. path='path/to/model.onnx' -> type=onnx
-        from export import export_formats
-        suffixes = list(export_formats().Suffix) + ['.xml']  # export suffixes
+
+        suffixes = list(self.export_formats().Suffix) + ['.xml']  # export suffixes
         check_suffix(p, suffixes)  # checks
         p = Path(p).name  # eliminate trailing separators
         pt, jit, onnx, xml, engine, coreml, saved_model, pb, tflite, edgetpu, tfjs, xml2 = (s in p for s in suffixes)
