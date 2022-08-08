@@ -88,6 +88,7 @@ def run(
         exp_name = yolo_weights.stem
     elif type(yolo_weights) is list and len(yolo_weights) == 1:  # single models after --yolo_weights
         exp_name = Path(yolo_weights[0]).stem
+        yolo_weights = Path(yolo_weights[0])
     else:  # multiple models after --yolo_weights
         exp_name = 'ensemble'
     exp_name = name if name else exp_name + "_" + strong_sort_weights.stem
@@ -98,8 +99,8 @@ def run(
     # Load model
     device = select_device(device)
     # model = DetectMultiBackend(yolo_weights, device=device, dnn=dnn, data=None, fp16=half)
-    yolo_weights.parent.mkdir(parents=False, exist_ok=True)
-    model = attempt_load(yolo_weights, map_location=device)  # load FP32 model
+    WEIGHTS.parent.mkdir(parents=False, exist_ok=True)
+    model = attempt_load(Path(yolo_weights), map_location=device)  # load FP32 model
     names, = model.names,
     stride = model.stride.max()  # model stride
     imgsz = check_img_size(imgsz[0], s=stride.cpu().numpy())  # check image size
