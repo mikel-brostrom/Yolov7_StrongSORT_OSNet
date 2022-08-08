@@ -1,3 +1,6 @@
 [submodule "strong_sort/deep/reid"]
 	path = strong_sort/deep/reid
 	url = https://github.com/KaiyangZhou/deep-person-reid
+[submodule "yolov7"]
+	path = yolov7
+	url = https://github.com/mikel-brostrom/yolov7
