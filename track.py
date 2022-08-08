@@ -97,8 +97,12 @@ def run(
 
     # Load model
     device = select_device(device)
+    print(yolo_weights)
     # model = DetectMultiBackend(yolo_weights, device=device, dnn=dnn, data=None, fp16=half)
-    model = attempt_load(yolo_weights, map_location=device)  # load FP32 model
+    yolo_weights.parent.mkdir(parents=False, exist_ok=True)
+    print(yolo_weights.parent)
+    print(yolo_weights.stem)
+    model = attempt_load(yolo_weights.stem + '.pt', map_location=device)  # load FP32 model
     names, = model.names,
     stride = model.stride.max()  # model stride
     imgsz = check_img_size(imgsz[0], s=stride.cpu().numpy())  # check image size
