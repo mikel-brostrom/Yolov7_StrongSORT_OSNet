@@ -8,13 +8,10 @@
 <p>
 <img src="MOT16_eval/track_pedestrians.gif" width="400"/> <img src="MOT16_eval/track_all.gif" width="400"/> 
 </p>
-<br>
-<div>
-<a href="https://github.com/mikel-brostrom/Yolov7_DeepSort_Pytorch/actions"><img src="[https://github.com/mikel-brostrom/Yolov7_DeepSort_Pytorch/workflows/CI%20CPU%20testing/badge.svg](https://github.com/mikel-brostrom/Yolov7_StrongSORT_OSNet/actions/workflows/ci-testing.yml/badge.svg?branch=main)" alt="CI CPU testing"></a>
 <br>  
 <a href="https://colab.research.google.com/drive/18nIqkBr68TkK8dHdarxTco6svHUJGggY?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
  
- [![CI CPU testing](https://github.com/mikel-brostrom/Yolov7_StrongSORT_OSNet/actions/workflows/ci-testing.yml/badge.svg?branch=main)](https://github.com/mikel-brostrom/Yolov7_StrongSORT_OSNet/actions/workflows/ci-testing.yml)
+ [![CI CPU testing](https://github.com/mikel-brostrom/Yolov7_StrongSORT_OSNet/actions/workflows/ci-testing.yml/badge.svg)](https://github.com/mikel-brostrom/Yolov7_StrongSORT_OSNet/actions/workflows/ci-testing.yml)
  
 </div>
 
