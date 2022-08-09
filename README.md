@@ -9,10 +9,9 @@
 <img src="MOT16_eval/track_pedestrians.gif" width="400"/> <img src="MOT16_eval/track_all.gif" width="400"/> 
 </p>
 <br>  
-<a href="https://colab.research.google.com/drive/18nIqkBr68TkK8dHdarxTco6svHUJGggY?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+<a href=" https://colab.research.google.com/drive/101f0PNBPx3245Hu710QAf2LXpf3E2uIk?usp=sharing"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
  
  [![CI CPU testing](https://github.com/mikel-brostrom/Yolov7_StrongSORT_OSNet/actions/workflows/ci-testing.yml/badge.svg)](https://github.com/mikel-brostrom/Yolov7_StrongSORT_OSNet/actions/workflows/ci-testing.yml)
- 
 </div>
 
 </div>
