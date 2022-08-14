@@ -98,8 +98,7 @@ def run(
 
     # Load model
     device = select_device(device)
-    # model = DetectMultiBackend(yolo_weights, device=device, dnn=dnn, data=None, fp16=half)
-    print(WEIGHTS)
+    
     WEIGHTS.mkdir(parents=True, exist_ok=True)
     model = attempt_load(Path(yolo_weights), map_location=device)  # load FP32 model
     names, = model.names,
