@@ -384,7 +384,7 @@ def parse_opt():
         "--yolo-weights",
         nargs="+",
         type=str,
-        default=WEIGHTS / "yolov7.pt",
+        default=WEIGHTS / "yolov7x.pt",
         help="model.pt path(s)",
     )
     parser.add_argument(
