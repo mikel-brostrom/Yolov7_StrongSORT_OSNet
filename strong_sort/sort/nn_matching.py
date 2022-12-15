@@ -2,7 +2,8 @@
 import numpy as np
 import sys
 import torch
-sys.path.append('strong_sort/deep/reid')
+
+sys.path.append("strong_sort/deep/reid")
 from torchreid.metrics.distance import compute_distance_matrix
 
 
@@ -24,8 +25,8 @@ def _pdist(a, b):
     if len(a) == 0 or len(b) == 0:
         return np.zeros((len(a), len(b)))
     a2, b2 = np.square(a).sum(axis=1), np.square(b).sum(axis=1)
-    r2 = -2. * np.dot(a, b.T) + a2[:, None] + b2[None, :]
-    r2 = np.clip(r2, 0., float(np.inf))
+    r2 = -2.0 * np.dot(a, b.T) + a2[:, None] + b2[None, :]
+    r2 = np.clip(r2, 0.0, float(np.inf))
     return r2
 
 
@@ -49,11 +50,11 @@ def _cosine_distance(a, b, data_is_normalized=False):
     if not data_is_normalized:
         a = np.asarray(a) / np.linalg.norm(a, axis=1, keepdims=True)
         b = np.asarray(b) / np.linalg.norm(b, axis=1, keepdims=True)
-    return 1. - np.dot(a, b.T)
+    return 1.0 - np.dot(a, b.T)
 
 
 def _nn_euclidean_distance(x, y):
-    """ Helper function for nearest neighbor distance metric (Euclidean).
+    """Helper function for nearest neighbor distance metric (Euclidean).
     Parameters
     ----------
     x : ndarray
@@ -68,12 +69,12 @@ def _nn_euclidean_distance(x, y):
     """
     x_ = torch.from_numpy(np.asarray(x) / np.linalg.norm(x, axis=1, keepdims=True))
     y_ = torch.from_numpy(np.asarray(y) / np.linalg.norm(y, axis=1, keepdims=True))
-    distances = compute_distance_matrix(x_, y_, metric='euclidean')
+    distances = compute_distance_matrix(x_, y_, metric="euclidean")
     return np.maximum(0.0, torch.min(distances, axis=0)[0].numpy())
 
 
 def _nn_cosine_distance(x, y):
-    """ Helper function for nearest neighbor distance metric (cosine).
+    """Helper function for nearest neighbor distance metric (cosine).
     Parameters
     ----------
     x : ndarray
@@ -88,7 +89,7 @@ def _nn_cosine_distance(x, y):
     """
     x_ = torch.from_numpy(np.asarray(x))
     y_ = torch.from_numpy(np.asarray(y))
-    distances = compute_distance_matrix(x_, y_, metric='cosine')
+    distances = compute_distance_matrix(x_, y_, metric="cosine")
     distances = distances.cpu().detach().numpy()
     return distances.min(axis=0)
 
@@ -120,8 +121,7 @@ class NearestNeighborDistanceMetric(object):
         elif metric == "cosine":
             self._metric = _nn_cosine_distance
         else:
-            raise ValueError(
-                "Invalid metric; must be either 'euclidean' or 'cosine'")
+            raise ValueError("Invalid metric; must be either 'euclidean' or 'cosine'")
         self.matching_threshold = matching_threshold
         self.budget = budget
         self.samples = {}
@@ -140,7 +140,7 @@ class NearestNeighborDistanceMetric(object):
         for feature, target in zip(features, targets):
             self.samples.setdefault(target, []).append(feature)
             if self.budget is not None:
-                self.samples[target] = self.samples[target][-self.budget:]
+                self.samples[target] = self.samples[target][-self.budget :]
         self.samples = {k: self.samples[k] for k in active_targets}
 
     def distance(self, features, targets):

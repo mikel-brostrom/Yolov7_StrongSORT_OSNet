@@ -1,6 +1,23 @@
 import argparse
-
 import os
+import sys
+from pathlib import Path
+
+import numpy as np
+import torch
+import torch.backends.cudnn as cudnn
+from numpy import random
+
+from strong_sort.strong_sort import StrongSORT
+from strong_sort.utils.parser import get_config
+from yolov7.models.experimental import attempt_load
+from yolov7.utils.datasets import LoadImages, LoadStreams
+from yolov7.utils.general import (check_file, check_img_size, check_imshow,
+                                  check_requirements, colorstr, cv2,
+                                  increment_path, non_max_suppression,
+                                  scale_coords, strip_optimizer, xyxy2xywh)
+from yolov7.utils.plots import plot_one_box
+from yolov7.utils.torch_utils import select_device, time_synchronized
 
 # limit the number of cpus used by high performance libraries
 os.environ["OMP_NUM_THREADS"] = "1"
@@ -9,12 +26,6 @@ os.environ["MKL_NUM_THREADS"] = "1"
 os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
 os.environ["NUMEXPR_NUM_THREADS"] = "1"
 
-import sys
-import numpy as np
-from pathlib import Path
-import torch
-import torch.backends.cudnn as cudnn
-from numpy import random
 
 
 FILE = Path(__file__).resolve()
@@ -30,25 +41,6 @@ if str(ROOT / "strong_sort") not in sys.path:
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
 
-from yolov7.models.experimental import attempt_load
-from yolov7.utils.datasets import LoadImages, LoadStreams
-from yolov7.utils.general import (
-    check_img_size,
-    non_max_suppression,
-    scale_coords,
-    check_requirements,
-    cv2,
-    check_imshow,
-    xyxy2xywh,
-    increment_path,
-    strip_optimizer,
-    colorstr,
-    check_file,
-)
-from yolov7.utils.torch_utils import select_device, time_synchronized
-from yolov7.utils.plots import plot_one_box
-from strong_sort.utils.parser import get_config
-from strong_sort.strong_sort import StrongSORT
 
 
 VID_FORMATS = (
