@@ -3,7 +3,6 @@ import os
 import sys
 from pathlib import Path
 
-import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
 from numpy import random
@@ -12,10 +11,19 @@ from strong_sort.strong_sort import StrongSORT
 from strong_sort.utils.parser import get_config
 from yolov7.models.experimental import attempt_load
 from yolov7.utils.datasets import LoadImages, LoadStreams
-from yolov7.utils.general import (check_file, check_img_size, check_imshow,
-                                  check_requirements, colorstr, cv2,
-                                  increment_path, non_max_suppression,
-                                  scale_coords, strip_optimizer, xyxy2xywh)
+from yolov7.utils.general import (
+    check_file,
+    check_img_size,
+    check_imshow,
+    check_requirements,
+    colorstr,
+    cv2,
+    increment_path,
+    non_max_suppression,
+    scale_coords,
+    strip_optimizer,
+    xyxy2xywh,
+)
 from yolov7.utils.plots import plot_one_box
 from yolov7.utils.torch_utils import select_device, time_synchronized
 
@@ -25,7 +33,6 @@ os.environ["OPENBLAS_NUM_THREADS"] = "1"
 os.environ["MKL_NUM_THREADS"] = "1"
 os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
 os.environ["NUMEXPR_NUM_THREADS"] = "1"
-
 
 
 FILE = Path(__file__).resolve()
@@ -39,8 +46,6 @@ if str(ROOT / "yolov7") not in sys.path:
 if str(ROOT / "strong_sort") not in sys.path:
     sys.path.append(str(ROOT / "strong_sort"))  # add strong_sort ROOT to PATH
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
-
-
 
 
 VID_FORMATS = (
@@ -92,7 +97,6 @@ def run(
 ):
 
     source = str(source)
-    save_img = not nosave and not source.endswith(".txt")  # save inference images
     is_file = Path(source).suffix[1:] in (VID_FORMATS)
     is_url = source.lower().startswith(("rtsp://", "rtmp://", "http://", "https://"))
     webcam = source.isnumeric() or source.endswith(".txt") or (is_url and not is_file)
@@ -402,10 +406,10 @@ def parse_opt():
         help="inference size h,w",
     )
     parser.add_argument(
-        "--conf-thres", type=float, default=0.5, help="confidence threshold"
+        "--conf-thres", type=float, default=0.3, help="confidence threshold"
     )
     parser.add_argument(
-        "--iou-thres", type=float, default=0.5, help="NMS IoU threshold"
+        "--iou-thres", type=float, default=0.45, help="NMS IoU threshold"
     )
     parser.add_argument(
         "--max-det", type=int, default=1000, help="maximum detections per image"
@@ -452,7 +456,7 @@ def parse_opt():
         help="existing project/name ok, do not increment",
     )
     parser.add_argument(
-        "--line-thickness", default=3, type=int, help="bounding box thickness (pixels)"
+        "--line-thickness", default=5, type=int, help="bounding box thickness (pixels)"
     )
     parser.add_argument(
         "--hide-labels", default=False, action="store_true", help="hide labels"
