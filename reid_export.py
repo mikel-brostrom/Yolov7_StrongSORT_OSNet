@@ -17,7 +17,8 @@ if str(ROOT / 'strong_sort') not in sys.path:
     sys.path.append(str(ROOT / 'strong_sort/'))  # add strong_sort ROOT to PATH
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
-from yolov5.utils.general import LOGGER, colorstr
+from yolov7.utils.general import colorstr
+from yolov7.utils.add_nms import LOGGER
 from strong_sort.deep.reid.torchreid.utils.feature_extractor import FeatureExtractor
 from strong_sort.deep.reid.torchreid.models import build_model
 from strong_sort.deep.reid_model_factory import get_model_name
