@@ -102,14 +102,14 @@ def run(
     WEIGHTS.mkdir(parents=True, exist_ok=True)
     model = attempt_load(Path(yolo_weights), map_location=device)  # load FP32 model
     names, = model.names,
-    stride = model.stride.max()  # model stride
-    imgsz = check_img_size(imgsz[0], s=stride.cpu().numpy())  # check image size
+    stride = model.stride.max().cpu().numpy()  # model stride
+    imgsz = check_img_size(imgsz[0], s=stride)  # check image size
 
     # Dataloader
     if webcam:
         show_vid = check_imshow()
         cudnn.benchmark = True  # set True to speed up constant image size inference
-        dataset = LoadStreams(source, img_size=imgsz, stride=stride.cpu().numpy())
+        dataset = LoadStreams(source, img_size=imgsz, stride=stride)
         nr_sources = 1
     else:
         dataset = LoadImages(source, img_size=imgsz, stride=stride)
