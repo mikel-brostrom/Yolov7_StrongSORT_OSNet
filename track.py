@@ -238,8 +238,15 @@ def run(
                         if save_vid or save_crop or show_vid:  # Add bbox to image
                             c = int(cls)  # integer class
                             id = int(id)  # integer id
-                            label = None if hide_labels else (f'{id} {names[c]}' if hide_conf else \
-                                (f'{id} {conf:.2f}' if hide_class else f'{id} {names[c]} {conf:.2f}'))
+                            label = f'{id} {names[c]} {conf:.2f}'
+                            if hide_labels:
+                                label = None
+                            elif hide_conf and hide_class:
+                                label = f'{id}'
+                            elif hide_class:
+                                label = f'{id} {conf:.2f}'
+                            elif hide_conf:
+                                label = f'{id} {names[c]}'
                             plot_one_box(bboxes, im0, label=label, color=colors[int(cls)], line_thickness=2)
                             if save_crop:
                                 txt_file_name = txt_file_name if (isinstance(path, list) and len(path) > 1) else ''
