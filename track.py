@@ -110,7 +110,7 @@ def run(
         show_vid = check_imshow()
         cudnn.benchmark = True  # set True to speed up constant image size inference
         dataset = LoadStreams(source, img_size=imgsz, stride=stride)
-        nr_sources = 1
+        nr_sources = len(dataset.sources)
     else:
         dataset = LoadImages(source, img_size=imgsz, stride=stride)
         nr_sources = 1
@@ -175,7 +175,7 @@ def run(
                 p = Path(p)  # to Path
                 s += f'{i}: '
                 txt_file_name = p.name
-                save_path = str(save_dir / p.name)  # im.jpg, vid.mp4, ...
+                save_path = str(save_dir / p.name) + str(i)  # im.jpg, vid.mp4, ...
             else:
                 p, im0, _ = path, im0s.copy(), getattr(dataset, 'frame', 0)
                 p = Path(p)  # to Path
