@@ -11,8 +11,8 @@ from .sort.detection import Detection
 from .sort.tracker import Tracker
 from .deep.reid_model_factory import show_downloadeable_models, get_model_url, get_model_name
 
-from torchreid.utils import FeatureExtractor
-from torchreid.utils.tools import download_url
+from torchreid.reid.utils import FeatureExtractor
+from torchreid.reid.utils.tools import download_url
 from .reid_multibackend import ReIDDetectMultiBackend
 
 __all__ = ['StrongSORT']
