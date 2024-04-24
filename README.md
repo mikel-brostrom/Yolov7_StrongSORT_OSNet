@@ -29,7 +29,7 @@ This repository contains a highly configurable two-stage-tracker that adjusts to
 
 If you already cloned and forgot to use `--recurse-submodules` you can run `git submodule update --init`
 
-2. Make sure that you fulfill all the requirements: Python 3.8 or later with all [requirements.txt](https://github.com/mikel-brostrom/Yolov7_DeepSort_Pytorch/blob/main/requirements.txt) dependencies installed, including torch>=1.7. To install, run:
+2. Make sure that you fulfill all the requirements: Python 3.8 or later with all [requirements.txt](https://github.com/mikel-brostrom/Yolov7_StrongSORT_OSNet/blob/main/requirements.txt) dependencies installed, including torch>=1.7. To install, run:
 
 `pip install -r requirements.txt`
 
