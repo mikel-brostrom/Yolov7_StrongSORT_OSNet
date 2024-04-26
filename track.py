@@ -14,7 +14,7 @@ from pathlib import Path
 import torch
 import torch.backends.cudnn as cudnn
 from numpy import random
-
+from PIL import Image
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # yolov5 strongsort root directory
