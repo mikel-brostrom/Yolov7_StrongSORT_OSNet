@@ -19,8 +19,8 @@ ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
 from yolov7.utils.general import colorstr
 from yolov7.utils.add_nms import LOGGER
-from strong_sort.deep.reid.torchreid.utils.feature_extractor import FeatureExtractor
-from strong_sort.deep.reid.torchreid.models import build_model
+from strong_sort.deep.reid.torchreid.utils.reid.feature_extractor import FeatureExtractor
+from strong_sort.deep.reid.torchreid.reid.models import build_model
 from strong_sort.deep.reid_model_factory import get_model_name
 
 
