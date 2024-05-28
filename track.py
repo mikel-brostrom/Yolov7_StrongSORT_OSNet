@@ -14,7 +14,7 @@ from pathlib import Path
 import torch
 import torch.backends.cudnn as cudnn
 from numpy import random
-
+from PIL import Image
 
 FILE = Path(__file__).resolve()
 ROOT = FILE.parents[0]  # yolov5 strongsort root directory
@@ -32,12 +32,30 @@ ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 from yolov7.models.experimental import attempt_load
 from yolov7.utils.datasets import LoadImages, LoadStreams
 from yolov7.utils.general import (check_img_size, non_max_suppression, scale_coords, check_requirements, cv2,
-                                  check_imshow, xyxy2xywh, increment_path, strip_optimizer, colorstr, check_file)
+                                  check_imshow, xyxy2xywh, xywh2xyxy, clip_coords, increment_path, strip_optimizer, colorstr, check_file)
 from yolov7.utils.torch_utils import select_device, time_synchronized
 from yolov7.utils.plots import plot_one_box
 from strong_sort.utils.parser import get_config
 from strong_sort.strong_sort import StrongSORT
 
+
+# method from [https://github.com/WongKinYiu/yolov7/blob/u5/utils/plots.py#L474] for availabling '--save-crop' argument
+def save_one_box(xyxy, im, file=Path('im.jpg'), gain=1.02, pad=10, square=False, BGR=False, save=True):
+    # Save image crop as {file} with crop size multiple {gain} and {pad} pixels. Save and/or return crop
+    xyxy = torch.tensor(xyxy).view(-1, 4)
+    b = xyxy2xywh(xyxy)  # boxes
+    if square:
+        b[:, 2:] = b[:, 2:].max(1)[0].unsqueeze(1)  # attempt rectangle to square
+    b[:, 2:] = b[:, 2:] * gain + pad  # box wh * gain + pad
+    xyxy = xywh2xyxy(b).long()
+    clip_coords(xyxy, im.shape)
+    crop = im[int(xyxy[0, 1]):int(xyxy[0, 3]), int(xyxy[0, 0]):int(xyxy[0, 2]), ::(1 if BGR else -1)]
+    if save:
+        file.parent.mkdir(parents=True, exist_ok=True)  # make directory
+        f = str(Path(increment_path(file)).with_suffix('.jpg'))
+        # cv2.imwrite(f, crop)  # https://github.com/ultralytics/yolov5/issues/7007 chroma subsampling issue
+        Image.fromarray(cv2.cvtColor(crop, cv2.COLOR_BGR2RGB)).save(f, quality=95, subsampling=0)
+    return crop
 
 VID_FORMATS = 'asf', 'avi', 'gif', 'm4v', 'mkv', 'mov', 'mp4', 'mpeg', 'mpg', 'ts', 'wmv'  # include video suffixes
 
